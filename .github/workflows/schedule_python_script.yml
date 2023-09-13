@@ -1,0 +1,28 @@
+name: Run Python script
+
+on:
+  schedule:
+    # Runs at 3:30 PM ET (8:30 PM UTC) from Monday to Friday
+    - cron: '30 20 * * 1-5'
+  workflow_dispatch:  # <-- This enables manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt # If you have any dependencies
+
+    - name: Run Python script
+      run: python execution.py
